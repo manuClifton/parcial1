@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1557532572 source:c:\users\alumno\desktop\primer parcial\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<conio.h>
+
