@@ -6,11 +6,19 @@
 	<ctype.h>
 	<conio.h>
 
-1557710245 source:c:\users\manu_\desktop\parcial1-master\primer parcial\main.c
+1557766378 source:c:\users\manu_\desktop\parcial1-master\primer parcial\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	<conio.h>
 	<math.h>
+
+1557764127 source:c:\users\manu_\desktop\parcial1-master\primer parcial\alta.c
+
+1557764141 source:c:\users\manu_\desktop\parcial1-master\primer parcial\baja.c
+
+1557764176 source:c:\users\manu_\desktop\parcial1-master\primer parcial\listar.c
+
+1557764159 source:c:\users\manu_\desktop\parcial1-master\primer parcial\modificar.c
 

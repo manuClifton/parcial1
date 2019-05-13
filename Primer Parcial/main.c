@@ -67,7 +67,7 @@ int mostrarServicios(eServicio lavado[], int tamServ);
 int mostrarAutos(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor);
 int buscarPatente(eAuto autos[], int tam, char patente[]);
 void mostrarAuto(eAuto autos, eMarca marcas, eColor colores);
-void altaAuto(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor, int id);
+void altaAuto(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor, int id, int flag);
 int buscarMarca(eMarca marcas[], int tamMarca, int idMarca);
 int buscarColor(eColor colores[], int tamColor, int idColor);
 int isEmpty(eAuto autos[], int tamAuto);
@@ -79,6 +79,7 @@ int isEmptyTrabajo(eTrabajo trabajos[], int tamTrabajo);
 void altaTrabajo(eAuto autos[], int tamAuto, eTrabajo trabajos[], int tamTrabajo ,eServicio lavado[], int tamServ, int id);
 void mostratTrabajo(eTrabajo trabajo, eAuto autos, eServicio lavados);
 int mostrarTrabajos( eTrabajo trabajos[], int tamTrabajos, eAuto autos[], int tamAuto, eServicio lavado[], int tamServ);
+void ordenarAutos(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor);
 
 // ---------------  MAIN --------//
 int main()
@@ -87,6 +88,7 @@ int main()
     char confirma;
     int id=1;
     int idTrabajo=1;
+    int flag=0;
 
     eMarca marcas[TAMMARCA] =
     {
@@ -130,12 +132,18 @@ int main()
 
         case 1:
                //ALTA AUTO
-            altaAuto(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR, id);
+            altaAuto(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR, id, flag);
             id++;
+            flag=1;
+
             system("pause");
             break;
 
         case 2:
+            if(flag == 0){
+                printf("\nDEBE REALIZAR EL ALTA DE UN AUTO PRIMERO\n");
+            }
+            else{
                  switch(menuModificarAuto()){
                     case 1:
                             //MODIFICAR COLOR
@@ -148,19 +156,33 @@ int main()
                     default:
                         printf("OPCION INVALIDA");
                         system("break");
+                }
             }
+
             system("pause");
             break;
 
         case 3:
                 //BAJA AUTO
-            bajaAuto(autos, TAMAUTO, marcas, colores);
+            if(flag == 0){
+                printf("\nDEBE REALIZAR EL ALTA DE UN AUTO PRIMERO\n");
+            }
+            else{
+                 bajaAuto(autos, TAMAUTO, marcas, colores);
+            }
+
             system("pause");
             break;
 
         case 4:
                 //LISTAR AUTOS
-            mostrarAutos(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR);
+            if(flag == 0){
+                printf("\nDEBE REALIZAR EL ALTA DE UN AUTO PRIMERO\n");
+            }
+            else{
+               //  mostrarAutos(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR);
+               ordenarAutos(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR);
+            }
             system("pause");
             break;
 
@@ -183,14 +205,26 @@ int main()
 
         case 8:
                 // ALTA TRABAJO
-            altaTrabajo(autos, TAMAUTO, trabajos, TAMTRABAJO, lavado, TAMLAVADO,  idTrabajo);
-            idTrabajo++;
+            if(flag == 0){
+                printf("\nDEBE REALIZAR EL ALTA DE UN AUTO PRIMERO\n");
+            }
+            else{
+                altaTrabajo(autos, TAMAUTO, trabajos, TAMTRABAJO, lavado, TAMLAVADO,  idTrabajo);
+                idTrabajo++;
+            }
+
             system("pause");
             break;
 
         case 9:
                 // LISTAR TRABAJOS
-            mostrarTrabajos(trabajos, TAMTRABAJO, autos, TAMAUTO, lavado, TAMLAVADO);
+             if(flag == 0){
+                printf("\nDEBE REALIZAR EL ALTA DE UN AUTO PRIMERO\n");
+            }
+            else{
+                 mostrarTrabajos(trabajos, TAMTRABAJO, autos, TAMAUTO, lavado, TAMLAVADO);
+            }
+
             system("pause");
             break;
 
@@ -300,7 +334,7 @@ int buscarColor(eColor colores[], int tamColor, int idColor)
 }
 
 
-void altaAuto(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor, int id)
+void altaAuto(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor, int id, int flag)
 {
     char patente[7];
     int existe;
@@ -413,6 +447,7 @@ void altaTrabajo(eAuto autos[], int tamAuto, eTrabajo trabajos[], int tamTrabajo
                 trabajos[hayLugar].id = id;
                 strcpy(trabajos[hayLugar].patente, patente);
                 trabajos[hayLugar].isEmpty = 1;
+
 
                 printf("\n ALTA DE TRABAJO EXITOSA!!!\n\n");
             }
@@ -613,6 +648,7 @@ void mostratTrabajo(eTrabajo trabajo, eAuto autos, eServicio lavado)
 
 }
 
+
 int mostrarTrabajos( eTrabajo trabajos[], int tamTrabajos, eAuto autos[], int tamAuto, eServicio lavado[], int tamServ)
 {
     int contador = 0;
@@ -710,6 +746,34 @@ void bajaAuto(eAuto autos[], int tamAuto, eMarca marca[], eColor color[])
         }
     }
 }
+
+
+void ordenarAutos(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor)
+{
+        eAuto auxChar;
+        system("cls");
+
+        printf("   MARCA      MODELO     COLOR    PATENTE     ID\n");
+        printf("  -------    --------   -------  ---------   ----\n");
+
+            for(int i=0; i<tamAuto-1; i++){
+                for(int j=i+1; j<tamAuto; j++){
+                    if(autos[i].idMarca > autos[j].idMarca && autos[i].isEmpty == 1){
+                        auxChar = autos[i];
+                        autos[i] = autos[j];
+                        autos[j] = auxChar;
+                    }
+                    if(autos[i].idMarca = autos[j].idMarca && strcmp(autos[i].patente,autos[j].patente)>0){
+                        auxChar = autos[i];
+                        autos[i] = autos[j];
+                        autos[j] = auxChar;
+                            }
+                }
+            }
+            mostrarAutos(autos, tamAuto, marcas, tamMarca, colores, tamColor);
+            system("pause");
+}
+
 
 
 
