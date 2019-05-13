@@ -129,6 +129,7 @@ int main()
         {
 
         case 1:
+               //ALTA AUTO
             altaAuto(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR, id);
             id++;
             system("pause");
@@ -144,6 +145,9 @@ int main()
                             //MODIFICAR MODELO
                             modificarModelo(autos, TAMAUTO);
                       break;
+                    default:
+                        printf("OPCION INVALIDA");
+                        system("break");
             }
             system("pause");
             break;
@@ -203,7 +207,7 @@ int main()
             break;
 
         default:
-            printf("\n Opcion invalida\n\n");
+            printf("\n OPCION INVALIDA\n\n");
             system("break");
         }
     }
@@ -310,6 +314,7 @@ void altaAuto(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor 
 
         printf("Ingrese patente: ");
         scanf("%s", patente);
+        strupr(patente);
 
         existe = buscarPatente(autos, tamAuto, patente);
 
@@ -378,6 +383,7 @@ void altaTrabajo(eAuto autos[], int tamAuto, eTrabajo trabajos[], int tamTrabajo
         }else{
             printf("\nIngrese patente: ");
             scanf("%s", patente);
+            strupr(patente);
 
             existe = buscarPatente(autos, tamAuto, patente);
 
