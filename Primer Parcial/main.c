@@ -8,8 +8,9 @@
 #define TAMMARCA 5
 #define TAMCOLOR 5
 #define TAMLAVADO 4
-#define TAMAUTO  5
-#define TAMTRABAJO 5
+#define TAMAUTO  40
+#define TAMTRABAJO 40
+#define TAMCLIENTE 40
 
 // ---------------  ESTRUCTURAS --------//
 typedef struct
@@ -34,6 +35,7 @@ typedef struct
 typedef struct
 {
     int id;
+    int idCliente;
     char patente[7];
     int idMarca;
     int idColor;
@@ -56,6 +58,15 @@ typedef struct
     eFecha fecha;
     int isEmpty;
 } eTrabajo;
+
+typedef struct
+{
+    int id;
+    char nombre[20];
+    char sexo;
+    int isEmpty;
+} eCliente;
+
 
 // ---------------  PROTOTITPOS --------//
 
@@ -80,6 +91,7 @@ void altaTrabajo(eAuto autos[], int tamAuto, eTrabajo trabajos[], int tamTrabajo
 void mostratTrabajo(eTrabajo trabajo, eAuto autos, eServicio lavados);
 int mostrarTrabajos( eTrabajo trabajos[], int tamTrabajos, eAuto autos[], int tamAuto, eServicio lavado[], int tamServ);
 void ordenarAutos(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor);
+void mostrarNegro(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor);
 
 // ---------------  MAIN --------//
 int main()
@@ -88,7 +100,7 @@ int main()
     char confirma;
     int id=1;
     int idTrabajo=1;
-    int flag=0;
+    int flag=1;
 
     eMarca marcas[TAMMARCA] =
     {
@@ -97,6 +109,18 @@ int main()
         {1002, "Ford"},
         {1003, "Chevrolet"},
         {1004, "Peugeot"},
+    };
+
+
+    eCliente clientes[TAMCLIENTE] =
+    {
+        {1, "Pablo", 'm'},
+        {2, "Lucas", 'm'},
+        {3, "Ricardo", 'm'},
+        {4, "Ana", 'f'},
+        {5, "Sofia", 'f'},
+        {6, "Laura", 'f'},
+
     };
 
     eColor colores[TAMCOLOR] =
@@ -115,15 +139,70 @@ int main()
         {20003, "Completo", 600}
     };
 
-    eAuto autos[TAMAUTO]={
-        {1, "asd345", 1000, 5000, 2019, 1}
-    };
 
-    eTrabajo trabajos[TAMTRABAJO]={
-        {1, "asd345", 20000, {10,10,2019}, 1},
-        {2, "asd345", 20001, {11,11,2019}, 1},
-        {3, "asd345", 20002, {12,12,2019}, 1}
-    };
+   eAuto autos[TAMAUTO]= {
+       {1, "AAA201", 1000, 5001, 1995, 1},
+       {2, "DFR234", 1003, 5000, 2002, 1},
+       {3, "GFT564", 1002, 5003, 2007, 1},
+       {4, "ACD321", 1002, 5003, 1995, 1},
+       {5, "HTD656", 1004, 5002, 2008, 1},
+       {6, "QSZ435", 1003, 5001, 1994, 1},
+       {7, "LGX201", 1001, 5000, 2012, 1},
+       {8, "SUZ324", 1001, 5002, 1991, 1},
+       {9, "HCU762", 1000, 5003, 2008, 1},
+       {10, "DYC735", 1003, 5001, 2002, 1},
+       {11, "JJK879", 1003, 5001, 2010, 1},
+       {12, "FED322", 1004, 5002, 2006, 1},
+       {13, "GHV332", 1001, 5003, 2007, 1},
+       {14, "BDE221", 1000, 5004, 1996, 1},
+       {15, "OPD332", 1000, 5001, 2014, 1},
+       {16, "PPD121", 1002, 5001, 2015, 1},
+       {17, "IIT230", 1001, 5000, 2009, 1},
+       {18, "KOD220", 1004, 5002, 2011, 1},
+       {19, "QSZ305", 1004, 5002, 1993, 1},
+       {20, "SSD128", 1002, 5003, 1992, 1},
+       {21, "SSD240", 1003, 5004, 1992, 1},
+       {22, "EDF213", 1001, 5000, 2001, 1},
+   };
+
+   eTrabajo trabajos[TAMTRABAJO] = {
+
+       {1, "AAA201", 20000, {12,3,2019}, 1},
+       {2, "DFR234", 20000, {2,4,2019}, 1},
+       {3, "GFT564", 20001, {7,1,2019}, 1},
+       {4, "ACD321", 20002, {9,11,2019}, 1},
+       {5, "HTD656", 20003, {12,12,2019}, 1},
+       {6, "QSZ435", 20001, {21,7,2019}, 1},
+       {7, "LGX201", 20001, {29,8,2019}, 1},
+       {8, "SUZ324", 20004, {31,5,2019}, 1},
+       {9, "HCU762", 20004, {2,2,2019}, 1},
+       {10, "DYC735", 20000, {18,2,2019}, 1},
+       {11, "JJK879", 20001, {17,3,2019}, 1},
+       {12, "AAA201", 20000, {17,4,2019}, 1},
+       {13, "DFR234", 20000, {2,6,2019}, 1},
+       {14, "GFT564", 20001, {7,3,2019}, 1},
+       {15, "ACD321", 20002, {21,7,2019}, 1},
+       {16, "HTD656", 20003, {11,9,2019}, 1},
+       {17, "QSZ435", 20001, {3,7,2019}, 1},
+       {18, "LGX201", 20001, {21,8,2019}, 1},
+       {19, "SUZ324", 20004, {28,5,2019}, 1},
+       {20, "HCU762", 20004, {2,8,2019}, 1},
+       {21, "DYC735", 20000, {8,2,2019}, 1},
+       {22, "JJK879", 20001, {17,3,2019}, 1},
+       {23, "KOD220", 20003, {17,4,2019}, 1},
+       {24, "QSZ305", 20000, {21,3,2019}, 1},
+       {25, "SSD128", 20002, {16,4,2019}, 1},
+       {26, "SSD240", 20000, {17,4,2019}, 1},
+       {27, "EDF213", 20001, {23,3,2019}, 1},
+       {28, "AAA201", 20000, {12,2,2019}, 1},
+       {29, "DFR234", 20000, {2,3,2019}, 1},
+       {30, "GFT564", 20001, {7,2,2019}, 1},
+       {31, "ACD321", 20002, {9,12,2019}, 1},
+       {32, "HTD656", 20003, {12,9,2019}, 1},
+       {33, "QSZ435", 20001, {21,5,2019}, 1},
+       {34, "HTD656", 20002, {12,2,2019}, 1},
+       {35, "QSZ435", 20000, {21,1,2019}, 1},
+   };
 
    do
     {
@@ -180,8 +259,7 @@ int main()
                 printf("\nDEBE REALIZAR EL ALTA DE UN AUTO PRIMERO\n");
             }
             else{
-               //  mostrarAutos(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR);
-               ordenarAutos(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR);
+                 mostrarAutos(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR);
             }
             system("pause");
             break;
@@ -227,8 +305,12 @@ int main()
 
             system("pause");
             break;
-
         case 10:
+            mostrarNegro(autos, TAMAUTO, marcas, TAMMARCA, colores, TAMCOLOR);
+            system("pause");
+            break;
+
+        case 11:
                 // SALIE
             printf("\nConfirma salida s/n?: ");
             fflush(stdin);
@@ -541,9 +623,9 @@ void modificarModelo(eAuto autos[], int tamAuto)
     }
 }
 
-void mostrarAuto(eAuto autos, eMarca marcas, eColor colores){
+void mostrarAuto(eAuto autos, eMarca marcas, eColor colores, eCliente clientes){
 
-    printf("%9s     %5d     %7s    %6s    %2d\n", marcas.descripcion, autos.modelo, colores.descripcion, autos.patente, autos.id);
+    printf("%9s     %5d     %7s    %6s    %2d  %d  %s   %c\n", marcas.descripcion, autos.modelo, colores.descripcion, autos.patente, autos.id clientes.id, clientes.nombre, clientes.sexo);
 }
 
 int mostrarAutos(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor){
@@ -551,8 +633,8 @@ int mostrarAutos(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eCol
 
     system("cls");
 
-     printf("   MARCA      MODELO     COLOR    PATENTE     ID\n");
-     printf("  -------    --------   -------  ---------   ----\n");
+     printf("   MARCA      MODELO     COLOR    PATENTE     ID        ID CLIENTE    NOMBRE     SEXO\n");
+     printf("  -------    --------   -------  ---------   ----       ----------   --------   -------\n");
 
     for(int i=0; i < tamAuto; i++)
     {
@@ -748,34 +830,50 @@ void bajaAuto(eAuto autos[], int tamAuto, eMarca marca[], eColor color[])
 }
 
 
-void ordenarAutos(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor)
+void mostrarNegro(eAuto autos[], int tamAuto, eMarca marcas[], int tamMarca, eColor colores[], int tamColor)
 {
-        eAuto auxChar;
-        system("cls");
+    int contador = 0;
+    int existe;
+    int id;
 
-        printf("   MARCA      MODELO     COLOR    PATENTE     ID\n");
-        printf("  -------    --------   -------  ---------   ----\n");
+            mostrarColores(colores, tamColor);
+            printf("\nIngrese numero de color: ");
+            scanf("%d", &id);
 
-            for(int i=0; i<tamAuto-1; i++){
-                for(int j=i+1; j<tamAuto; j++){
-                    if(autos[i].idMarca > autos[j].idMarca && autos[i].isEmpty == 1){
-                        auxChar = autos[i];
-                        autos[i] = autos[j];
-                        autos[j] = auxChar;
-                    }
-                    if(autos[i].idMarca = autos[j].idMarca && strcmp(autos[i].patente,autos[j].patente)>0){
-                        auxChar = autos[i];
-                        autos[i] = autos[j];
-                        autos[j] = auxChar;
-                            }
-                }
+            existe = buscarColor(colores, tamColor, id);
+
+            while(existe == -1){
+                    printf("\nNo Existe el color ingresado. Reingrese una vez mas: ");
+                    scanf("%d", &id);
+
+                    existe = buscarColor(colores, tamColor, id);
             }
-            mostrarAutos(autos, tamAuto, marcas, tamMarca, colores, tamColor);
-            system("pause");
+
+            printf("   MARCA      MODELO     COLOR    PATENTE     ID\n");
+            printf("  -------    --------   -------  ---------   ----\n");
+
+
+            for(int i=0; i < tamAuto; i++){
+                    if(autos[i].idColor == id && autos[i].isEmpty == 1){
+                            for(int j=0; j<tamMarca; j++){
+                                if(autos[i].idMarca == marcas[j].id){
+                                    for(int k=0; k<tamColor; k++){
+                                        if(autos[i].idColor == colores[k].id){
+                                             mostrarAuto(autos[i], marcas[j], colores[k]);
+                                          //   printf("%s   %d    %s     %s    %d\n", marcas[j].descripcion, autos[i].modelo, colores[k].descripcion, autos[i].patente, autos[i].id);
+                                        }
+                                    }
+                                }
+                            }
+
+
+
+
+                    }
+            }
+    if(contador == 0){
+        printf("No hay autos de color negro.");
+    }
 }
-
-
-
-
 
 
