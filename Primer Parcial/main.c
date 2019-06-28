@@ -108,6 +108,7 @@ void importeTrabajos(eTrabajo trabajos[], int tamTrabajo, eAuto autos[], int tam
 void importeServicios(eTrabajo trabajos[], int tamTrabajo, eServicio servicios[], int tamServ);
 void importeXfecha(eTrabajo trabajos[], int tamTrabajo, eServicio servicios[], int tamServ);
 void servicioMasPedido(eTrabajo trabajos[], int tamTrabajo, eServicio servicios[], int tamServ);
+void marcasXlavadoCompleto(eMarca marcas[], int tamMarca, eTrabajo trabajos[], int tamTrabajo, eServicio servicios[], int tamServ, eAuto autos[], int tamAuto);
 
 
 
@@ -384,8 +385,12 @@ int main()
            mostrarXfecha(trabajos, TAMTRABAJO, servicios, TAMSERVICIO,autos, TAMAUTO, marcas, TAMMARCA,clientes,TAMCLIENTE);
             system("pause");
             break;
-
         case 20:
+           marcasXlavadoCompleto(marcas, TAMMARCA, trabajos, TAMTRABAJO, servicios, TAMSERVICIO,autos, TAMAUTO );
+            system("pause");
+            break;
+
+        case 21:
                 // SALIER
             printf("\nConfirma salida s/n?: ");
             fflush(stdin);
@@ -432,9 +437,10 @@ int menu()
     printf("16- Facturacion total por fehca seleccionada\n");
     printf("17- Servicio mas pedidos\n");
     printf("18- Mostrar autos por trabajos realizados\n");
-    printf("19- Mostrar autos que recibieron trabajos en la fecha indicada\n\n");
+    printf("19- Mostrar autos que recibieron trabajos en la fecha indicada\n");
+    printf("20- Mostrar marcas que recibieron trabajos trabajos completos\n\n");
 
-    printf("20- Salir\n\n");
+    printf("21- Salir\n\n");
     printf("Ingrese opcion: ");
     scanf("%d", &opcion);
 
@@ -1261,123 +1267,71 @@ void importeServicios(eTrabajo trabajos[], int tamTrabajo, eServicio servicios[]
 
 void servicioMasPedido(eTrabajo trabajos[], int tamTrabajo, eServicio servicios[], int tamServ){
 
-    char servicio[10];
-    int max;
+    int max = 0;
     int contador1 = 0;
     int contador2 = 0;
     int contador3 = 0;
     int contador4 = 0;
-    int acumulador1 = 0;
-    int acumulador2 = 0;
-    int acumulador3 = 0;
-    int acumulador4 = 0;
 
-
-        for(int j=0; j<tamServ; j++){
-            if(servicios[j].precio == 250){
-                for(int k=0; k<tamTrabajo; k++){
-                    if(trabajos[k].idServicio == servicios[k].id){
-                        acumulador1 = acumulador1 + (servicios[j].precio);
-                        contador1++;
-                        max=contador1;
-                        strcpy(servicio, servicios[j].descripcion);
-                    }
-                }
-            }
-        }
-        for(int l=0; l<tamServ; l++){
-            if(servicios[l].precio == 300){
-                for(int m=0; m<tamTrabajo; m++){
-                    if(trabajos[m].idServicio == servicios[l].id){
-                        acumulador2 = acumulador2 + (servicios[l].precio);
-                        contador2++;
-                        if(max < contador2){
-                            max = contador2;
-                            strcpy(servicio, servicios[l].descripcion);
-
-                        }
-                    }
-                }
-            }
-        }
-        for(int n=0; n<tamServ; n++){
-            if(servicios[n].precio == 400){
-                for(int r=0; r<tamTrabajo; r++){
-                    if(trabajos[r].idServicio == servicios[n].id){
-                        acumulador3 = acumulador3 + (servicios[n].precio);
-                        contador3++;
-                        if(max < contador3){
-                            max = contador3;
-                            strcpy(servicio, servicios[n].descripcion);
-                        }
-                    }
-                }
-            }
-        }
-        for(int s=0; s<tamServ; s++){
-            if(servicios[s].precio == 600){
-                for(int t=0; t<tamTrabajo; t++){
-                    if(trabajos[t].idServicio == servicios[s].id){
-                        acumulador4 = acumulador4 + (servicios[s].precio);
-                        contador4++;
-                         if(max < contador4){
-                            max = contador4;
-                            strcpy(servicio, servicios[s].descripcion);
-                        }
-                    }
-                }
-            }
-        }
 
         for(int i=0; i<tamServ; i++){
-            if(servicios[i].precio == 250){
+
                 for(int j=0; j<tamTrabajo; j++){
                     if(trabajos[j].idServicio == servicios[i].id){
-                            if(strcmp(servicio, "Lavado") == 0){
+
                                 contador1++;
-                            }
+                                if(max < contador1){
+                                    max = contador1;
+                                }
                     }
                 }
-            }
-                max = contador1;
-                strcpy(servicio, servicios[i].descripcion);// ACAAAAA!!!!
-            if(servicios[i].precio == 300){
-                for(int k=0; <tamTrabajo; k++){
+
+                for(int k=0; k<tamTrabajo; k++){
                     if(trabajos[k].idServicio == servicios[i].id){
-                            if(strcmp(servicio, "Pulido") == 0){
+
                                 contador2++;
                                 if(max < contador2){
                                     max = contador2;
+
                                 }
-                            }
                     }
                 }
-            }
-             if(servicios[i].precio == 400){
-                for(int l=0; <tamTrabajo; l++){
+
+                for(int l=0; l<tamTrabajo; l++){
                     if(trabajos[l].idServicio == servicios[i].id){
-                            if(strcmp(servicio, "Encerado") == 0){
+
                                 contador3++;
-                            }
+                                if(max < contador3){
+                                    max = contador3;
+                                }
                     }
                 }
-            }
-            if(servicios[i].precio == 400){
-                for(int m=0; <tamTrabajo; m++){
+
+
+                for(int m=0; m<tamTrabajo; m++){
                     if(trabajos[m].idServicio == servicios[i].id){
-                            if(strcmp(servicio, "Completo") == 0){
+
                                 contador4++;
-                            }
+                                if(max < contador4){
+                                    max = contador4;
+                                }
                     }
                 }
-            }
         }
 
-        if(contador1 != 0 || contador2 != 0 || contador3 != 0 || contador4 != 0){
-            printf("\nEl servicio mas pedido es: %s\n\n", servicio);
-        }
-        if(contador1 == 0 && contador2 == 0 && contador3 == 0 && contador4 == 0){
+        if(max == 0){
             printf("\nNo se registraron servicios.\n");
+        }else{
+            if(max == contador1){
+                printf("\nEl servicio mas pedido es: Lavados\n\n");
+            }else if(max == contador2){
+                 printf("\nEl servicio mas pedido es: Pulidos\n\n");
+            }else if(max == contador3){
+                 printf("\nEl servicio mas pedido es: Encerados\n\n");
+            }else if(max == contador4){
+                 printf("\nEl servicio mas pedido es: Completos\n\n");
+            }
+
         }
 }
 
@@ -1504,6 +1458,83 @@ void mostrarXfecha(eTrabajo trabajos[], int tamTrabajo, eServicio servicios[], i
                     }
                 }
             }
+        }
+}
+
+
+void marcasXlavadoCompleto(eMarca marcas[], int tamMarca, eTrabajo trabajos[], int tamTrabajo, eServicio servicios[], int tamServ, eAuto autos[], int tamAuto){
+
+    char servicio[]="Completo";
+    int max=0;
+    int contador1=0;
+    int contador2=0;
+    int contador3=0;
+    int contador4=0;
+    int contador5=0;
+
+            printf(" MARCA         TRABAJO\n");
+            printf("-------       ---------\n");
+
+        for(int i=0; i<tamTrabajo; i++){
+            for(int j=0; j<tamServ; j++){
+                if(trabajos[i].idServicio == servicios[j].id && strcmp( servicios[j].descripcion, servicio) == 0){
+                    for(int k=0; k<tamAuto; k++){
+                        if(strcmp(autos[k].patente, trabajos[i].patente) == 0){
+                            for(int l=0; l<tamMarca; l++){
+                                if(autos[k].idMarca == marcas[l].id){
+                                    if(strcmp(marcas[l].descripcion,"Renault") == 0){
+                                        contador1++;
+                                        if(max < contador1){
+                                            max = contador1;
+                                        }
+                                    }
+                                    if(strcmp(marcas[l].descripcion,"Fiat") == 0){
+                                        contador2++;
+                                        if(max < contador2){
+                                            max = contador2;
+                                        }
+                                    }
+                                    if(strcmp(marcas[l].descripcion,"Ford") == 0){
+                                        contador3++;
+                                        if(max < contador3){
+                                            max = contador3;
+                                        }
+                                    }
+                                     if(strcmp(marcas[l].descripcion,"Chevrolet") == 0){
+                                        contador4++;
+                                        if(max < contador4){
+                                            max = contador4;
+                                        }
+                                    }
+                                    if(strcmp(marcas[l].descripcion,"Peugeot") == 0){
+                                        contador5++;
+                                        if(max < contador5){
+                                            max = contador5;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+         if(max == 0){
+            printf("\nNo se registraron servicios Completos.\n");
+        }else{
+            if(max == contador1){
+                printf("\nLa Marca de autos con mas lavados completos es: Renault\n\n");
+            }else if(max == contador2){
+                 printf("\nLa Marca de autos con mas lavados completos es: Fiat\n\n");
+            }else if(max == contador3){
+                 printf("\nLa Marca de autos con mas lavados completos es: Ford\n\n");
+            }else if(max == contador4){
+                 printf("\nLa Marca de autos con mas lavados completos es: Chevrolet\n\n");
+            }else if(max == contador5){
+                 printf("\nLa Marca de autos con mas lavados completos es: Peugeot\n\n");
+            }
+
         }
 }
 

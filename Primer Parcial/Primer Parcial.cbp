@@ -31,25 +31,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="alta.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="alta.h" />
-		<Unit filename="baja.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="baja.h" />
-		<Unit filename="listar.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="listar.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="modificar.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="modificar.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
